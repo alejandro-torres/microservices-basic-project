@@ -7,11 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Customer" />
+        <module name="Product" />
+        <module name="OperationRegister" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Customer" target="18" />
-      <module name="java-microservices-project" target="1.5" />
+      <module name="java-microservices-project" target="18" />
+      <module name="OperationRegister" target="18" />
+      <module name="Product" target="18" />
     </bytecodeTargetLevel>
   </component>
 </project>

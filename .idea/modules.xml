@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Customer/Customer.iml" filepath="$PROJECT_DIR$/Customer/Customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OperationRegister/OperationRegister.iml" filepath="$PROJECT_DIR$/OperationRegister/OperationRegister.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Product/Product.iml" filepath="$PROJECT_DIR$/Product/Product.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java-microservices-project.iml" filepath="$PROJECT_DIR$/.idea/java-microservices-project.iml" />
     </modules>
   </component>
