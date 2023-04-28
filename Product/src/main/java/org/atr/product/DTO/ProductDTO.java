@@ -1,20 +1,25 @@
 package org.atr.product.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-//@JsonIgnore(value = true)
 public class ProductDTO {
 
+    @JsonProperty("productId")
     private Integer id;
 
+    @JsonProperty("productName")
     private String name;
 
+    @JsonProperty("productValue")
     private Integer value;
 
 }
