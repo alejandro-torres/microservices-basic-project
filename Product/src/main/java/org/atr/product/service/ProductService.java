@@ -13,6 +13,7 @@ public interface ProductService {
 
     List<Product> selectAllProducts();
     Boolean deleteProductById(Integer id);
-    Product updateProductById(Integer id);
+
+    Optional<Product> updateProduct(ProductDTO product);
 
 }

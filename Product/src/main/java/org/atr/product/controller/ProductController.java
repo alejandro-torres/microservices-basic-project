@@ -19,8 +19,8 @@ public class ProductController {
     @Autowired
     ProductServiceImpl productService;
 
-    @GetMapping("/select/{id}")
-    public ResponseEntity<ProductDTO> getProduct(@PathVariable final Integer id){
+    @GetMapping("/read/{id}")
+    public ResponseEntity<ProductDTO> readProduct(@PathVariable final Integer id){
 
         Optional<Product> product;
         ProductDTO productDTO = new ProductDTO();
@@ -37,13 +37,13 @@ public class ProductController {
             return new ResponseEntity<>(productDTO, HttpStatus.OK);
         }catch (Exception e){
             final Logger logger = Logger.getLogger(this.getClass().toString());
-            logger.log(Level.SEVERE,this.getClass().toString() + " getProduct() " + HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.log(Level.SEVERE,this.getClass().toString() + " readProduct() " + HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/select/all")
-    public ResponseEntity<List<ProductDTO>> selectAllProducts(){
+    @GetMapping("/read/all")
+    public ResponseEntity<List<ProductDTO>> readAllProducts(){
         List<ProductDTO> productDTOList =  new ArrayList<>();
         Product product;
         try{
@@ -64,20 +64,40 @@ public class ProductController {
                 return new ResponseEntity<>(productDTOList, HttpStatus.OK);
             }
         }catch(Exception e){
+            final Logger logger = Logger.getLogger(this.getClass().toString());
+            logger.log(Level.SEVERE,this.getClass().toString() + " readAllProducts() " + HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<ProductDTO> saveProduct(@RequestBody final ProductDTO productDTO){
+    @PostMapping("/create")
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody final ProductDTO productDTO){
         try {
             Product product = productService.saveProduct(productDTO);
             productDTO.setId(product.getId());
 
-            return new ResponseEntity<>(productDTO, HttpStatus.OK);
+            return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
         }catch (Exception e){
             final Logger logger = Logger.getLogger(this.getClass().toString());
-            logger.log(Level.SEVERE, this.getClass().toString() + " saveProduct() " + HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.log(Level.SEVERE, this.getClass().toString() + " createProduct() " + HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PutMapping("/update")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody final ProductDTO productDTO){
+        try{
+            Optional<Product> product = productService.updateProduct(productDTO);
+            if (product.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            ProductDTO response = new ProductDTO();
+            response.setId(product.get().getId());
+            response.setName(product.get().getName());
+            response.setValue(product.get().getValue());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

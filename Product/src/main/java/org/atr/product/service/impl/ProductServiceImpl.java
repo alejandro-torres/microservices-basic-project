@@ -45,7 +45,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProductById(Integer id) {
-        return null;
+    public Optional<Product> updateProduct(ProductDTO productDTO) {
+        if (productRepository.findById(productDTO.getId()).isEmpty()){
+            return Optional.empty();
+        }else{
+            Product product = new Product();
+            product.setId(productDTO.getId());
+            product.setName(productDTO.getName());
+            product.setValue(productDTO.getValue());
+            return Optional.of(productRepository.save(product));
+        }
     }
 }
