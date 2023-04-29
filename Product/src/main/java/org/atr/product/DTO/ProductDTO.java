@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.UUID;
+import java.math.BigDecimal;
+
 
 @Data
 @Accessors(chain = true)
@@ -20,6 +21,6 @@ public class ProductDTO {
     private String name;
 
     @JsonProperty("productValue")
-    private Integer value;
+    private BigDecimal value;
 
 }

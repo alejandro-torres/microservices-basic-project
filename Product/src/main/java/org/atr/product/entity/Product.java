@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+
 @Entity
 @Data
 @Accessors
@@ -19,6 +21,6 @@ public class Product {
     private String name;
 
     @Column(name = "product_value")
-    private Integer value;
+    private BigDecimal value;
 
 }
