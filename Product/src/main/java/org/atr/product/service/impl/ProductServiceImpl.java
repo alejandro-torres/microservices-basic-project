@@ -41,7 +41,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean deleteProductById(Integer id) {
-        return null;
+        try {
+            productRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            //TODO: logger
+            return false;
+        }
     }
 
     @Override

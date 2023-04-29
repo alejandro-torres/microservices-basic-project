@@ -101,6 +101,29 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<ProductDTO> deleteProductById(@PathVariable final Integer id){
+        try {
+            Optional<Product> product = productService.selectProductById(id);
+            boolean result = productService.deleteProductById(id);
+            if (result && !(product.isEmpty())){
+
+                ProductDTO productDTO = new ProductDTO();
+                productDTO.setId(product.get().getId());
+                productDTO.setName(product.get().getName());
+                productDTO.setValue(product.get().getValue());
+
+                return new ResponseEntity<>(productDTO,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }catch (Exception e){
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 
 }
