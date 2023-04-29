@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.atr.customer.entity.Purchase;
 
 import java.util.List;
 
@@ -23,6 +22,6 @@ public class CustomerDTO {
     private String email;
 
     @JsonProperty("customerPurchaseList")
-    private List<Purchase> purchaseList;
+    private List<PurchaseDTO> purchaseList;
 
 }

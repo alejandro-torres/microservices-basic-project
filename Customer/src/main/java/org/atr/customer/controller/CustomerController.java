@@ -12,21 +12,21 @@ public class CustomerController {
 
     @PostMapping("/create")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody final CustomerDTO customerDTO){
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> readCustomerById(@PathVariable final Integer id){
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody final CustomerDTO customerDTO){
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomerDTO> deleteCustomerById(@PathVariable final Integer id){
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 
