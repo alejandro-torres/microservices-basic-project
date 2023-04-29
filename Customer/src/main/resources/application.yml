@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: Costumer
+  h2:
+    console:
+      enabled : "true"
+      path : "/h2"
+  datasource:
+    url: "jdbc:h2:mem:memDb"
+    driverClassName : "org.h2.Driver"
+    username : "atr"
+    password : "123"
