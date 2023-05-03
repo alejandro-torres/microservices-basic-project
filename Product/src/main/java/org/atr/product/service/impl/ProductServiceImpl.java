@@ -6,60 +6,38 @@ import org.atr.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.atr.product.service.ProductService;
+import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
-
-
-
     @Override
-    public Product saveProduct(ProductDTO productDTO) {
-        Product product = new Product();
-        product.setName(productDTO.getName());
-        product.setValue(productDTO.getValue());
-        product = productRepository.save(product);
-        return product;
+    public Optional<Product> saveProduct(String name, BigDecimal value, Date purchaseDate) {
+        return Optional.empty();
     }
 
     @Override
     public Optional<Product> selectProductById(Integer id) {
-        Optional<Product> product = productRepository.findById(id);
-        return product;
+        return Optional.empty();
     }
 
     @Override
     public List<Product> selectAllProducts() {
-        List<Product> productList = productRepository.findAll();
-        return productList;
+        return null;
     }
 
     @Override
     public Boolean deleteProductById(Integer id) {
-        try {
-            productRepository.deleteById(id);
-            return true;
-        }catch (Exception e){
-            //TODO: logger
-            return false;
-        }
+        return null;
     }
 
     @Override
-    public Optional<Product> updateProduct(ProductDTO productDTO) {
-        if (productRepository.findById(productDTO.getId()).isEmpty()){
-            return Optional.empty();
-        }else{
-            Product product = new Product();
-            product.setId(productDTO.getId());
-            product.setName(productDTO.getName());
-            product.setValue(productDTO.getValue());
-            return Optional.of(productRepository.save(product));
-        }
+    public Optional<Product> updateProduct(Integer id, String name, BigDecimal value, Date purchaseDate) {
+        return Optional.empty();
     }
 }

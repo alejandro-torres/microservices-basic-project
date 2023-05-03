@@ -2,16 +2,25 @@ package org.atr.customer.service.impl;
 
 import org.atr.customer.dto.CustomerDTO;
 import org.atr.customer.entity.Customer;
+import org.atr.customer.repository.CustomerRepository;
 import org.atr.customer.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Override
-    public Optional<Customer> createCustomer(CustomerDTO customerDTO) {
-        return Optional.empty();
+    public Optional<Customer> createCustomer(String name, String email) {
+        Customer customer = Customer.builder()
+                .name(name)
+                .email(email)
+                .build();
+        return Optional.of(customerRepository.save(customer));
     }
 
     @Override
@@ -20,12 +29,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> updateCustomer(CustomerDTO customerDTO) {
+    public Optional<Customer> updateCustomer(Integer id, String name, String email) {
         return Optional.empty();
     }
 
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
-        return Optional.empty();
+        return customerRepository.findById(id);
     }
+
 }

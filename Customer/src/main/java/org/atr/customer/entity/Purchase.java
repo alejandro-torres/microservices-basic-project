@@ -1,7 +1,10 @@
 package org.atr.customer.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +13,10 @@ import java.util.Date;
 
 @Entity
 @Data
-@Accessors
+@Accessors(chain = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "purchase")
 public class Purchase {
 
@@ -20,7 +26,7 @@ public class Purchase {
 
     @ManyToOne
     @JoinColumn(name = "customer_id_fk")
-    private Customer customerId;
+    private Customer customer;
 
     @Column(name = "purchase_name")
     private String name;

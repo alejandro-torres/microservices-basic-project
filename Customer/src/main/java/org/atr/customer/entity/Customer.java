@@ -1,14 +1,20 @@
 package org.atr.customer.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
 
 @Entity
 @Data
-@Accessors
+@Accessors(chain = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "customer")
 public class Customer {
 
@@ -23,7 +29,7 @@ public class Customer {
     @Column(name = "customer_email")
     private String email;
 
-    @OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchaseList;
 
 
