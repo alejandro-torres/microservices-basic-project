@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/customer")
@@ -40,9 +42,9 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
             List<PurchaseDTO> purchaseDTOList = new ArrayList<>();
-            Iterator iterator = customer.get().getPurchaseList().iterator();
+            Iterator<Purchase> iterator = customer.get().getPurchaseList().iterator();
             while (iterator.hasNext()){
-                Purchase purchase = (Purchase) iterator.next();
+                Purchase purchase = iterator.next();
                 PurchaseDTO purchaseDTO = PurchaseDTO.builder()
                         .id(purchase.getId())
                         .name(purchase.getName())
@@ -63,13 +65,49 @@ public class CustomerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody final CustomerDTO customerDTO){
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody final CustomerDTO customerDTO) {
+
+        Optional<Customer> customer = customerService.updateCustomer(customerDTO.getId(), customerDTO.getName(), customerDTO.getEmail());
+
+        if (customer.isEmpty()) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.SEVERE, "/update");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+
+            List<PurchaseDTO> purchaseDTOList = new ArrayList<>();
+            Iterator<Purchase> iterator = customer.get().getPurchaseList().iterator();
+            while (iterator.hasNext()) {
+                Purchase purchase = iterator.next();
+                PurchaseDTO purchaseDTO = PurchaseDTO.builder()
+                        .id(purchase.getId())
+                        .name(purchase.getName())
+                        .value(purchase.getValue())
+                        .purchaseDate(purchase.getPurchaseDate())
+                        .build();
+                purchaseDTOList.add(purchaseDTO);
+            }
+
+            CustomerDTO response = CustomerDTO.builder()
+                    .id(customer.get().getId())
+                    .name(customer.get().getName())
+                    .email(customer.get().getEmail())
+                    .purchaseList(purchaseDTOList)
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomerDTO> deleteCustomerById(@PathVariable final Integer id){
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        boolean result = customerService.deleteCustomerById(id);
+        if (result){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
