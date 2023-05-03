@@ -21,17 +21,17 @@ import java.util.Date;
 public class Purchase {
 
     @Id
-    @Column(name = "purchase_id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "customer_id_fk")
     private Customer customer;
 
-    @Column(name = "purchase_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "purchase_value")
+    @Column(name = "value")
     private BigDecimal value;
 
     @Column(name = "purchase_date")

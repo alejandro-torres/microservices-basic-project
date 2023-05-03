@@ -1,4 +1,4 @@
-package org.atr.product.entity;
+package org.atr.operationregister.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Data
@@ -15,18 +16,21 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
-public class Product {
+@Table(name = "operation_register")
+public class OperationRegister {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "value")
-    private BigDecimal value;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+
+    @Column(name = "operation_date")
+    private Date date;
+
 
 }

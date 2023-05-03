@@ -19,14 +19,14 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @Column(name = "customer_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "customer_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "customer_email")
+    @Column(name = "email")
     private String email;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
