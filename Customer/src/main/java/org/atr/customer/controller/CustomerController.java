@@ -110,6 +110,11 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("/purchase/add")
+    public ResponseEntity<CustomerDTO> createPurchase(@RequestBody final CustomerDTO customerDTO){
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
 
 
 }

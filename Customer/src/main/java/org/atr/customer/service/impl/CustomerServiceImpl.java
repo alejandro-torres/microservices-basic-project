@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +62,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Customer> addPurchase(Integer customerId, String name, BigDecimal value, Date purchaseDate) {
+        return Optional.empty();
     }
 
 }
