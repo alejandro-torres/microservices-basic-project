@@ -33,7 +33,7 @@ public class CustomerController {
                 .name(customer.get().getName())
                 .email(customer.get().getEmail())
                 .build();
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
     @GetMapping("/read/{id}")
     public ResponseEntity<CustomerDTO> readCustomerById(@PathVariable final Integer id){
