@@ -1,13 +1,13 @@
-package org.atr.operationregister;
+package org.atr.operations;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OperationRegisterApplication {
+public class OperationsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OperationRegisterApplication.class, args);
+        SpringApplication.run(OperationsApplication.class, args);
     }
 
 }

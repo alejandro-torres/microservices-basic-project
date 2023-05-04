@@ -1,4 +1,4 @@
-package org.atr.operationregister.entity;
+package org.atr.operations.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "operation_register")
-public class OperationRegister {
+@Table(name = "operation")
+public class Operation {
 
     @Id
     @Column(name = "id")
