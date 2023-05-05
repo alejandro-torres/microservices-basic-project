@@ -11,9 +11,9 @@ public interface OperationService {
 
     Optional<Operation> createOperation(String description, BigDecimal totalAmount, Date operationDate);
 
-    boolean deleteOperationById();
+    boolean deleteOperationById(Integer id);
 
-    Optional<Operation> selectOperationById();
+    Optional<Operation> selectOperationById(Integer id);
 
     Optional<List<Operation>> selectAllOperations();
 

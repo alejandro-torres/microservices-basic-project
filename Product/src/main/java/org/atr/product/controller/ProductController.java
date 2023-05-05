@@ -124,21 +124,10 @@ public class ProductController {
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<ProductDTO> deleteProductById(@PathVariable final Integer id){
-        Optional<Product> product = productService.selectProductById(id);
-
-        if (product.isEmpty()){
-            Logger logger =  Logger.getLogger(this.getClass().getName());
-            logger.log(Level.WARNING, "No data found to be delete");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
-            productService.deleteProductById(id);
-            ProductDTO response = ProductDTO.builder()
-                    .id(product.get().getId())
-                    .name(product.get().getName())
-                    .value(product.get().getValue())
-                    .build();
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        if (productService.deleteProductById(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

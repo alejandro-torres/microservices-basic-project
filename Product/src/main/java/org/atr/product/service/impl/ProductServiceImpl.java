@@ -4,12 +4,15 @@ package org.atr.product.service.impl;
 import org.atr.product.entity.Product;
 import org.atr.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.atr.product.service.ProductService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -54,9 +57,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean deleteProductById(Integer id) {
-        productRepository.deleteById(id);
-        return null;
+    public boolean deleteProductById(Integer id) {
+        try{
+            productRepository.deleteById(id);
+            return true;
+        }catch (EmptyResultDataAccessException e){
+            Logger log = Logger.getLogger(this.getClass().getName());
+            log.log(Level.SEVERE, e.getMessage());
+            return false;
+        }
     }
 
     @Override

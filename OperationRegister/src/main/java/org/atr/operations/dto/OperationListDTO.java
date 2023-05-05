@@ -7,8 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import java.math.BigDecimal;
-import java.util.Date;
+
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -16,18 +16,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class OperationDTO {
+public class OperationListDTO {
 
-    @JsonProperty("operationId")
-    private Integer id;
 
-    @JsonProperty("operationDescription")
-    private String description;
-
-    @JsonProperty("operationTotalAmount")
-    private BigDecimal totalAmount;
-
-    @JsonProperty("operationDate")
-    private Date date;
+    @JsonProperty("operationList")
+    private List<OperationDTO> operationList;
 
 }
