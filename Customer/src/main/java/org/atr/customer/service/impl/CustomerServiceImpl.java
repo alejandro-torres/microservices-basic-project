@@ -81,10 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
             return Optional.empty();
         }
         //Search for products using ID
-        ResponseEntity<ProductListDTO> readProductResponse = searchProducts(productIdList);
+        ResponseEntity<ProductListDTO> searchProductResponse = searchProducts(productIdList);
 
         //add product data to pursache
-        Iterator<ProductDTO> iterator = readProductResponse.getBody().getProductListDTO().iterator();
+        Iterator<ProductDTO> iterator = searchProductResponse.getBody().getProductListDTO().iterator();
         BigDecimal totalAmount = new BigDecimal(0);
         List<Integer> productIDListResponse = new ArrayList<>();
 
@@ -98,7 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
         //and
         //register the pursache into Operation
         List<String> productNames = new ArrayList<>();
-        for (ProductDTO productDTO : readProductResponse.getBody().getProductListDTO()) {
+        for (ProductDTO productDTO : searchProductResponse.getBody().getProductListDTO()) {
             productNames.add(productDTO.getName());
         }
         sendOperation(generateDescription(productNames),totalAmount,purchaseDate);
