@@ -81,11 +81,7 @@ public class CustomerServiceImpl implements CustomerService {
             return Optional.empty();
         }
         //Search for products using ID
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ProductListDTO> readProductResponse = restTemplate.postForEntity(
-                "http://localhost:8080/product/read/all",
-                productIdList,
-                ProductListDTO.class);
+        ResponseEntity<ProductListDTO> readProductResponse = searchProducts(productIdList);
 
         //add product data to pursache
         Iterator<ProductDTO> iterator = readProductResponse.getBody().getProductListDTO().iterator();
@@ -99,13 +95,15 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         //generate Description for operation
+        //and
+        //register the pursache into Operation
         List<String> productNames = new ArrayList<>();
         for (ProductDTO productDTO : readProductResponse.getBody().getProductListDTO()) {
             productNames.add(productDTO.getName());
         }
-        //register the pursache into Operation
         sendOperation(generateDescription(productNames),totalAmount,purchaseDate);
 
+        //Build the entity to save into DataBase
         Purchase purchase = Purchase.builder()
                 .totalAmount(totalAmount)
                 .purchaseDate(purchaseDate)
@@ -140,6 +138,14 @@ public class CustomerServiceImpl implements CustomerService {
                 operationDTO,
                 OperationDTO.class);
         return true;
+    }
+
+    private ResponseEntity<ProductListDTO> searchProducts(List<Integer> productIdList){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(
+                "http://localhost:8080/product/read/all",
+                productIdList,
+                ProductListDTO.class);
     }
 
     private String generateDescription(List<String> data){
