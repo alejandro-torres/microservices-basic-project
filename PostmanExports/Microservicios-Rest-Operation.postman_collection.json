@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "d5a0cd0f-6d1a-4ec1-9879-dd3b4c245eaf",
+		"name": "Microservicios-Rest-Operation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "operationReadById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/operation/read/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"operation",
+						"read",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "operationCreate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationDescription\": \"loremloremloremlorem\",\r\n    \"operationTotalAmount\": 123,\r\n    \"operationDate\": \"1962-09-16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/operation/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"operation",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "operationDELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"operationId\":1,\r\n    \"operationDescription\": \"loremloremloremlorem\",\r\n    \"operationTotalAmount\": 123,\r\n    \"operationDate\": \"1962-09-16\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/operation/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"operation",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "operationReadAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/operation/read/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"operation",
+						"read",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
