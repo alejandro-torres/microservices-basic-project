@@ -72,7 +72,7 @@ public class CustomerController {
 
         if (customer.isEmpty()) {
             Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.SEVERE, "/update");
+            logger.log(Level.SEVERE, "Update NOT possible due to Customer ID does not exist");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
 
