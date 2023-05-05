@@ -51,6 +51,7 @@ public class CustomerController {
                         .name(purchase.getName())
                         .value(purchase.getValue())
                         .purchaseDate(purchase.getPurchaseDate())
+                        .productId(purchase.getProductId())
                         .build();
                 purchaseDTOList.add(purchaseDTO);
             }
@@ -67,7 +68,7 @@ public class CustomerController {
 
     @PutMapping("/update")
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody final CustomerDTO customerDTO) {
-
+        //TODO: validation of email user etc
         Optional<Customer> customer = customerService.updateCustomer(customerDTO.getId(), customerDTO.getName(), customerDTO.getEmail());
 
         if (customer.isEmpty()) {
@@ -85,6 +86,8 @@ public class CustomerController {
                         .name(purchase.getName())
                         .value(purchase.getValue())
                         .purchaseDate(purchase.getPurchaseDate())
+                        .productId(purchase.getProductId())
+                        .customerId(purchase.getCustomer().getId())
                         .build();
                 purchaseDTOList.add(purchaseDTO);
             }
@@ -112,14 +115,13 @@ public class CustomerController {
     }
 
     @PostMapping("/purchase/add")
-    public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody final CustomerDTO customerDTO){
+    public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody final CustomerDTO customerDTO) {
 
         Optional<Purchase> purchase = customerService.addPurchase(customerDTO.getId(),
-                customerDTO.getPurchaseList().get(0).getName(),
-                customerDTO.getPurchaseList().get(0).getValue(),
+                customerDTO.getPurchaseList().get(0).getProductId(),
                 customerDTO.getPurchaseList().get(0).getPurchaseDate());
 
-        if (purchase.isEmpty()){
+        if (purchase.isEmpty()) {
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.SEVERE, "createPurchase failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,16 +132,18 @@ public class CustomerController {
                 .name(purchase.get().getName())
                 .value(purchase.get().getValue())
                 .purchaseDate(purchase.get().getPurchaseDate())
+                .productId(purchase.get().getProductId())
                 .customerId(purchase.get().getCustomer().getId())
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
 
     @GetMapping("purchase/read/all/{id}")
     public ResponseEntity<List<PurchaseDTO>> readAllPurchaseById(@PathVariable final Integer id){
-        Optional<List<Purchase>> purchaseList = customerService.selectPurchaseListById(id);
+        Optional<List<Purchase>> purchaseList = customerService.selectPurchaseListByCustomerId(id);
 
         if (purchaseList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -155,6 +159,7 @@ public class CustomerController {
                     .name(purchase.getName())
                     .value(purchase.getValue())
                     .purchaseDate(purchase.getPurchaseDate())
+                    .productId(purchase.getProductId())
                     .build();
             response.add(purchaseDTO);
         }

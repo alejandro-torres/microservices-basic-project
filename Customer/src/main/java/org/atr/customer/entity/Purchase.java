@@ -35,6 +35,9 @@ public class Purchase {
     @Column(name = "purchase_value")
     private BigDecimal value;
 
+    @Column(name = "product_id")
+    private Integer productId;
+
     @Column(name = "purchase_date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
