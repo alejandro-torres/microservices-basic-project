@@ -1,6 +1,7 @@
 package org.atr.customer.service.impl;
 
 
+import org.atr.customer.dto.OperationDTO;
 import org.atr.customer.dto.ProductDTO;
 import org.atr.customer.dto.ProductListDTO;
 import org.atr.customer.entity.Customer;
@@ -13,8 +14,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.Level;
@@ -75,19 +74,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Optional<Purchase> addPurchase(Integer customerId, List<Integer> productIdList, Date purchaseDate) {
-
+        //check if Customer exists!
         Optional<Customer> customerOfPurchase = customerRepository.findById(customerId);
         if (customerOfPurchase.isEmpty()){
             Logger logger = Logger.getLogger(this.getClass().getName());
             logger.log(Level.SEVERE, "No Customer for Purchase");
             return Optional.empty();
         }
+        //Search for products using ID
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ProductListDTO> readProductResponse = restTemplate.postForEntity(
                 "http://localhost:8080/product/read/all",
                 productIdList,
                 ProductListDTO.class);
 
+        //add product data to pursache
         Iterator<ProductDTO> iterator = readProductResponse.getBody().getProductListDTO().iterator();
         BigDecimal totalAmount = new BigDecimal(0);
         List<Integer> productIDListResponse = new ArrayList<>();
@@ -97,6 +98,14 @@ public class CustomerServiceImpl implements CustomerService {
             totalAmount = totalAmount.add(productDTO.getValue());
             productIDListResponse.add(productDTO.getId());
         }
+
+        //generate Description for operation
+        List<String> productNames = new ArrayList<>();
+        for (ProductDTO productDTO : readProductResponse.getBody().getProductListDTO()) {
+            productNames.add(productDTO.getName());
+        }
+        //register the pursache into Operation
+        sendOperation(generateDescription(productNames),totalAmount,purchaseDate);
 
         Purchase purchase = Purchase.builder()
                 .totalAmount(totalAmount)
@@ -118,5 +127,30 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return Optional.ofNullable(customer.get().getPurchaseList());
     }
+
+    private boolean sendOperation(String description, BigDecimal totalAmount, Date operationDate){
+        RestTemplate restTemplate = new RestTemplate();
+        OperationDTO operationDTO = OperationDTO.builder()
+                .description(description)
+                .totalAmount(totalAmount)
+                .date(operationDate)
+                .build();
+
+        ResponseEntity<OperationDTO> readProductResponse = restTemplate.postForEntity(
+                "http://localhost:8082/operation/create",
+                operationDTO,
+                OperationDTO.class);
+        return true;
+    }
+
+    private String generateDescription(List<String> data){
+        Set<String> description = new HashSet<>();
+        for (String str : data) {
+            description.add(str);
+        }
+        return description.toString();
+    }
+
+
 
 }
