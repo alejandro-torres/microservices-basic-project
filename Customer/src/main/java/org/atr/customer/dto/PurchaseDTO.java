@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -27,14 +28,11 @@ public class PurchaseDTO {
     @JsonProperty("customerId")
     private Integer customerId;
 
-    @JsonProperty("productId")
-    private Integer productId;
+    @JsonProperty("productIdList")
+    private List<Integer> productIdList;
 
-    @JsonProperty("purchaseName")
-    private String name;
-
-    @JsonProperty("purchaseValue")
-    private BigDecimal value;
+    @JsonProperty("totalAmount")
+    private BigDecimal totalAmount;
 
     @JsonProperty("purchaseDate")
     private Date purchaseDate;

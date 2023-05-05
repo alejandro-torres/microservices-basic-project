@@ -2,6 +2,7 @@ package org.atr.customer.service.impl;
 
 
 import org.atr.customer.dto.ProductDTO;
+import org.atr.customer.dto.ProductListDTO;
 import org.atr.customer.entity.Customer;
 import org.atr.customer.entity.Purchase;
 import org.atr.customer.repository.CustomerRepository;
@@ -14,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Purchase> addPurchase(Integer customerId, Integer productId, Date purchaseDate) {
+    public Optional<Purchase> addPurchase(Integer customerId, List<Integer> productIdList, Date purchaseDate) {
 
         Optional<Customer> customerOfPurchase = customerRepository.findById(customerId);
         if (customerOfPurchase.isEmpty()){
@@ -83,17 +83,26 @@ public class CustomerServiceImpl implements CustomerService {
             return Optional.empty();
         }
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ProductDTO> readProductResponse = restTemplate.getForEntity("http://localhost:8080/product/read/{id}",
-                ProductDTO.class,
-                productId);
+        ResponseEntity<ProductListDTO> readProductResponse = restTemplate.postForEntity(
+                "http://localhost:8080/product/read/all",
+                productIdList,
+                ProductListDTO.class);
 
+        Iterator<ProductDTO> iterator = readProductResponse.getBody().getProductListDTO().iterator();
+        BigDecimal totalAmount = new BigDecimal(0);
+        List<Integer> productIDListResponse = new ArrayList<>();
+
+        while (iterator.hasNext()){
+            ProductDTO productDTO = iterator.next();
+            totalAmount = totalAmount.add(productDTO.getValue());
+            productIDListResponse.add(productDTO.getId());
+        }
 
         Purchase purchase = Purchase.builder()
-                .value(readProductResponse.getBody().getValue())
-                .name(readProductResponse.getBody().getName())
+                .totalAmount(totalAmount)
                 .purchaseDate(purchaseDate)
                 .customer(customerOfPurchase.get())
-                .productId(readProductResponse.getBody().getId())
+                .productIdList(productIDListResponse)
                 .build();
 
         return Optional.of(purchaseRepository.save(purchase));

@@ -18,7 +18,7 @@ public interface CustomerService {
 
     Optional<Customer> selectCustomerById(Integer id);
 
-    Optional<Purchase> addPurchase(Integer customerId, Integer productId, Date purchaseDate);
+    Optional<Purchase> addPurchase(Integer customerId, List<Integer> productIdList, Date purchaseDate);
 
     Optional<List<Purchase>> selectPurchaseListByCustomerId(Integer id);
 

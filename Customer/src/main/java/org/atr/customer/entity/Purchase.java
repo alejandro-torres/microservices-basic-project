@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,14 +30,11 @@ public class Purchase {
     @JoinColumn(name = "customer_id_fk")
     private Customer customer;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
 
-    @Column(name = "purchase_value")
-    private BigDecimal value;
-
-    @Column(name = "product_id")
-    private Integer productId;
+    @Column(name = "product_list")
+    private List<Integer> productIdList;
 
     @Column(name = "purchase_date")
     @Temporal(TemporalType.DATE)

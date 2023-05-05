@@ -22,11 +22,6 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Optional<Operation> updateOperation() {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<Operation> selectOperationById() {
         return Optional.empty();
     }

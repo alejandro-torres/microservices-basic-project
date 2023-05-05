@@ -48,10 +48,9 @@ public class CustomerController {
                 PurchaseDTO purchaseDTO = PurchaseDTO.builder()
                         .id(purchase.getId())
                         .customerId(purchase.getCustomer().getId())
-                        .name(purchase.getName())
-                        .value(purchase.getValue())
+                        .totalAmount(purchase.getTotalAmount())
                         .purchaseDate(purchase.getPurchaseDate())
-                        .productId(purchase.getProductId())
+                        .productIdList(purchase.getProductIdList())
                         .build();
                 purchaseDTOList.add(purchaseDTO);
             }
@@ -83,10 +82,9 @@ public class CustomerController {
                 Purchase purchase = iterator.next();
                 PurchaseDTO purchaseDTO = PurchaseDTO.builder()
                         .id(purchase.getId())
-                        .name(purchase.getName())
-                        .value(purchase.getValue())
+                        .totalAmount(purchase.getTotalAmount())
                         .purchaseDate(purchase.getPurchaseDate())
-                        .productId(purchase.getProductId())
+                        .productIdList(purchase.getProductIdList())
                         .customerId(purchase.getCustomer().getId())
                         .build();
                 purchaseDTOList.add(purchaseDTO);
@@ -118,7 +116,7 @@ public class CustomerController {
     public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody final CustomerDTO customerDTO) {
 
         Optional<Purchase> purchase = customerService.addPurchase(customerDTO.getId(),
-                customerDTO.getPurchaseList().get(0).getProductId(),
+                customerDTO.getPurchaseList().get(0).getProductIdList(),
                 customerDTO.getPurchaseList().get(0).getPurchaseDate());
 
         if (purchase.isEmpty()) {
@@ -129,10 +127,9 @@ public class CustomerController {
 
         PurchaseDTO response = PurchaseDTO.builder()
                 .id(purchase.get().getId())
-                .name(purchase.get().getName())
-                .value(purchase.get().getValue())
+                .totalAmount(purchase.get().getTotalAmount())
                 .purchaseDate(purchase.get().getPurchaseDate())
-                .productId(purchase.get().getProductId())
+                .productIdList(purchase.get().getProductIdList())
                 .customerId(purchase.get().getCustomer().getId())
                 .build();
 
@@ -142,7 +139,7 @@ public class CustomerController {
 
 
     @GetMapping("purchase/read/all/{id}")
-    public ResponseEntity<List<PurchaseDTO>> readAllPurchaseById(@PathVariable final Integer id){
+    public ResponseEntity<List<PurchaseDTO>> readAllPurchaseByCustomerId(@PathVariable final Integer id){
         Optional<List<Purchase>> purchaseList = customerService.selectPurchaseListByCustomerId(id);
 
         if (purchaseList.isEmpty()){
@@ -156,10 +153,9 @@ public class CustomerController {
             PurchaseDTO purchaseDTO = PurchaseDTO.builder()
                     .id(purchase.getId())
                     .customerId(purchase.getCustomer().getId())
-                    .name(purchase.getName())
-                    .value(purchase.getValue())
+                    .totalAmount(purchase.getTotalAmount())
                     .purchaseDate(purchase.getPurchaseDate())
-                    .productId(purchase.getProductId())
+                    .productIdList(purchase.getProductIdList())
                     .build();
             response.add(purchaseDTO);
         }

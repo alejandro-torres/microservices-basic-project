@@ -1,13 +1,13 @@
 package org.atr.product.controller;
 
 import org.atr.product.DTO.ProductDTO;
+import org.atr.product.DTO.ProductListDTO;
 import org.atr.product.entity.Product;
 import org.atr.product.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +57,31 @@ public class ProductController {
             response.add(productDTO);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/read/all")
+    public ResponseEntity<ProductListDTO> readAllProductsById(@RequestBody final List<Integer> productIdList){
+
+        List<Product> productList = productService.selectAllProductsById(productIdList);
+
+        if (productList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        Iterator<Product> productIterator = productList.iterator();
+        List<ProductDTO> productListDTO =  new ArrayList<>();
+
+        while (productIterator.hasNext()){
+            Product product = productIterator.next();
+            ProductDTO productDTO =  ProductDTO.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .value(product.getValue())
+                    .build();
+            productListDTO.add(productDTO);
+        }
+
+        return new ResponseEntity<>(ProductListDTO.builder().productListDTO(productListDTO).build(), HttpStatus.OK);
     }
 
     @PostMapping("/create")

@@ -17,12 +17,7 @@ public class OperationController {
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<OperationDTO> readOperationById(@RequestParam final Integer id){
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity<OperationDTO> updateOperation(@RequestBody final OperationDTO operationDTO){
+    public ResponseEntity<OperationDTO> readOperationById(@PathVariable final Integer id){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 

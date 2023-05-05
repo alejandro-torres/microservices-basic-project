@@ -12,6 +12,8 @@ public interface ProductService {
     Optional<Product> selectProductById(Integer id);
 
     List<Product> selectAllProducts();
+
+    List<Product> selectAllProductsById(List<Integer> productIdList);
     Boolean deleteProductById(Integer id);
 
     Optional<Product> updateProduct(Integer id ,String name, BigDecimal value);

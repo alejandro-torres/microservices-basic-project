@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.atr.product.service.ProductService;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> selectAllProducts() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public List<Product> selectAllProductsById(List<Integer> productIdList) {
+        List<Product> infoProductList = productRepository.findAllById(productIdList);
+        List<Product> response = new ArrayList<>();
+
+        for (Integer productId: productIdList) {
+            response.add(infoProductList.stream()
+                            .filter(productInfo -> productInfo.getId() == productId)
+                            .findFirst()
+                            .orElse(null));
+        }
+
+        return response;
     }
 
     @Override
