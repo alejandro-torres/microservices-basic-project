@@ -55,7 +55,6 @@ public class CustomerServiceImpl implements CustomerService {
         if (checkCustomer.isEmpty()){
             return Optional.empty();
         }else {
-            //TODO: update the list as well! this method just deleted the purchaseList
             Optional<List<Purchase>> purchaseList = selectPurchaseListByCustomerId(id);
             Customer customer = Customer.builder()
                     .id(id)
