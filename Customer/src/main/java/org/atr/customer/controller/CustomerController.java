@@ -47,6 +47,7 @@ public class CustomerController {
                 Purchase purchase = iterator.next();
                 PurchaseDTO purchaseDTO = PurchaseDTO.builder()
                         .id(purchase.getId())
+                        .customerId(purchase.getCustomer().getId())
                         .name(purchase.getName())
                         .value(purchase.getValue())
                         .purchaseDate(purchase.getPurchaseDate())
@@ -111,8 +112,54 @@ public class CustomerController {
     }
 
     @PostMapping("/purchase/add")
-    public ResponseEntity<CustomerDTO> createPurchase(@RequestBody final CustomerDTO customerDTO){
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody final CustomerDTO customerDTO){
+
+        Optional<Purchase> purchase = customerService.addPurchase(customerDTO.getId(),
+                customerDTO.getPurchaseList().get(0).getName(),
+                customerDTO.getPurchaseList().get(0).getValue(),
+                customerDTO.getPurchaseList().get(0).getPurchaseDate());
+
+        if (purchase.isEmpty()){
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.SEVERE, "createPurchase failed");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        PurchaseDTO response = PurchaseDTO.builder()
+                .id(purchase.get().getId())
+                .name(purchase.get().getName())
+                .value(purchase.get().getValue())
+                .purchaseDate(purchase.get().getPurchaseDate())
+                .customerId(purchase.get().getCustomer().getId())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @GetMapping("purchase/read/all/{id}")
+    public ResponseEntity<List<PurchaseDTO>> readAllPurchaseById(@PathVariable final Integer id){
+        Optional<List<Purchase>> purchaseList = customerService.selectPurchaseListById(id);
+
+        if (purchaseList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        List<PurchaseDTO> response = new ArrayList<>();
+        Iterator<Purchase> iterator = purchaseList.get().iterator();
+        while (iterator.hasNext()){
+            Purchase purchase = iterator.next();
+            PurchaseDTO purchaseDTO = PurchaseDTO.builder()
+                    .id(purchase.getId())
+                    .customerId(purchase.getCustomer().getId())
+                    .name(purchase.getName())
+                    .value(purchase.getValue())
+                    .purchaseDate(purchase.getPurchaseDate())
+                    .build();
+            response.add(purchaseDTO);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

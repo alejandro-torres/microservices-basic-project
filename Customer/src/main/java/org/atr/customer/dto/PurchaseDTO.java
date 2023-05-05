@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -24,6 +23,9 @@ public class PurchaseDTO {
 
     @JsonProperty("purchaseId")
     private Integer id;
+
+    @JsonProperty("customerId")
+    private Integer customerId;
 
     @JsonProperty("purchaseName")
     private String name;

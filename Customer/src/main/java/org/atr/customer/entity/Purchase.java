@@ -22,6 +22,7 @@ public class Purchase {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
@@ -31,7 +32,7 @@ public class Purchase {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "value")
+    @Column(name = "purchase_value")
     private BigDecimal value;
 
     @Column(name = "purchase_date")

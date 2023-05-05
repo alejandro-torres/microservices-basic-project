@@ -1,8 +1,7 @@
 package org.atr.customer.service;
 
-import org.atr.customer.dto.CustomerDTO;
 import org.atr.customer.entity.Customer;
-
+import org.atr.customer.entity.Purchase;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +18,9 @@ public interface CustomerService {
 
     Optional<Customer> selectCustomerById(Integer id);
 
-    Optional<Customer> addPurchase(Integer customerId, String name, BigDecimal value, Date purchaseDate);
+    Optional<Purchase> addPurchase(Integer customerId, String name, BigDecimal value, Date purchaseDate);
+
+    Optional<List<Purchase>> selectPurchaseListById(Integer id);
 
 
 }
