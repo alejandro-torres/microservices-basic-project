@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Customer" />
         <module name="Product" />
         <module name="OperationRegister" />
+        <module name="Users" />
+        <module name="Customer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
