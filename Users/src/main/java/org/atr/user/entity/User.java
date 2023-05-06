@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
-import java.math.BigDecimal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -24,13 +23,13 @@ public class User {
     private Integer id;
 
     @Column(name = "name")
-    private BigDecimal name;
+    private String name;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
-    private char[] password;
+    private BCryptPasswordEncoder password;
 
     @Column(name="dni")
     private String dni;

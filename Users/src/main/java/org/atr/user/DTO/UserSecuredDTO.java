@@ -14,14 +14,21 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class UserDTO {
+public class UserSecuredDTO {
 
     @JsonProperty("userId")
     private Integer id;
+
+    @JsonProperty("userName")
+    private String name;
 
     @JsonProperty("userEmail")
     private String email;
 
     @JsonProperty("userPassword")
     private String password;
+
+    @JsonProperty("userDNI")
+    private String dni;
+
 }
