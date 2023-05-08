@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
 import static org.atr.users.security.ApplicationUserRole.*;
 import javax.sql.DataSource;
 
@@ -36,7 +38,12 @@ public class ApplicationSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeHttpRequests((authz) -> authz
+        http
+                //Disabled csrf just in case of NO user client
+                //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrf().disable()
+                //.and()
+                .authorizeHttpRequests((authz) -> authz
                        /* .requestMatchers(ApiPaths.USER_VALIDATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name(),USER.name())
                         .requestMatchers(HttpMethod.POST,ApiPaths.USER_MANAGER_CREATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name())
                         .requestMatchers(HttpMethod.PUT,ApiPaths.USER_MANAGER_UPDATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name())
@@ -67,7 +74,7 @@ public class ApplicationSecurityConfiguration {
         UserDetails user = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("admin"))
-                .roles(USER.name())
+                .roles(ADMIN.name())
                 //.authorities(ADMIN.getGrantedAuthorities())
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
