@@ -1,4 +1,4 @@
-package org.atr.user.entity;
+package org.atr.users.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -15,24 +14,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class Users {
+
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Column(name = "name")
+    @Column(name = "username")
     private String name;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
-    private BCryptPasswordEncoder password;
+    private String password;
 
-    @Column(name="dni")
+    @Column(name = "dni")
     private String dni;
 
+    @Column(name = "enabled")
+    private boolean enabled;
 
 }

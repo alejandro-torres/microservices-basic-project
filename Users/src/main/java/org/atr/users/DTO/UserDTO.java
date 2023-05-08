@@ -1,4 +1,4 @@
-package org.atr.user.DTO;
+package org.atr.users.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,10 +14,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class UserSecuredDTO {
-
-    @JsonProperty("userId")
-    private Integer id;
+public class UserDTO {
 
     @JsonProperty("userName")
     private String name;
@@ -27,8 +24,4 @@ public class UserSecuredDTO {
 
     @JsonProperty("userPassword")
     private String password;
-
-    @JsonProperty("userDNI")
-    private String dni;
-
 }

@@ -1,16 +1,16 @@
-package org.atr.user.service.impl;
+package org.atr.users.service.impl;
 
-import org.atr.user.entity.User;
-import org.atr.user.service.UserService;
+import org.atr.users.entity.Users;
+import org.atr.users.service.UsersService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UsersServiceImpl implements UsersService {
     @Override
-    public Optional<User> saveUser(String name, String email, String dni, BCryptPasswordEncoder pass) {
+    public Optional<Users> saveUser(String name, String email, String dni, BCryptPasswordEncoder pass) {
         return Optional.empty();
     }
 
@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> readUserById(Integer id) {
+    public Optional<Users> readUserById(Integer id) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<User> updateUserInformation(Integer id, String name, String email, String dni, BCryptPasswordEncoder pass) {
+    public Optional<Users> updateUserInformation(Integer id, String name, String email, String dni, BCryptPasswordEncoder pass) {
         return Optional.empty();
     }
 

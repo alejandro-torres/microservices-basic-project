@@ -1,36 +1,35 @@
-package org.atr.user.controller;
+package org.atr.users.controller;
 
-import org.atr.user.DTO.UserDTO;
-import org.atr.user.DTO.UserSecuredDTO;
+import org.atr.users.DTO.UserDTO;
+import org.atr.users.DTO.UserSecuredDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UsersController {
 
     //@Secured("ADMIN")
-    @PostMapping("/create")
+    @PostMapping("/manager/create")
     public ResponseEntity<UserSecuredDTO> createUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     //@Secured("ADMIN")
-    @GetMapping("/read")
-    public ResponseEntity<UserSecuredDTO> readUser(@RequestBody final UserSecuredDTO userDTO){
+    @GetMapping("/manager/read/{id}")
+    public ResponseEntity<UserSecuredDTO> readUserById(@PathVariable final Integer id){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     //@Secured("ADMIN")
-    @PutMapping("/update")
+    @PutMapping("/manager/update")
     public ResponseEntity<UserSecuredDTO> updateUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     //@Secured("ADMIN")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/manager/delete")
     public ResponseEntity<UserSecuredDTO> deleteUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
