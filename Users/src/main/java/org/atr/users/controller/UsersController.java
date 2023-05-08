@@ -4,31 +4,32 @@ import org.atr.users.DTO.UserDTO;
 import org.atr.users.DTO.UserSecuredDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UsersController {
 
-    //@Secured("ADMIN")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
     @PostMapping("/manager/create")
     public ResponseEntity<UserSecuredDTO> createUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
-
-    //@Secured("ADMIN")
+    //@PreAuthorize("hasAuthority('api:read')")
     @GetMapping("/manager/read/{id}")
     public ResponseEntity<UserSecuredDTO> readUserById(@PathVariable final Integer id){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    //@Secured("ADMIN")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/manager/update")
     public ResponseEntity<UserSecuredDTO> updateUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    //@Secured("ADMIN")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/manager/delete")
     public ResponseEntity<UserSecuredDTO> deleteUser(@RequestBody final UserSecuredDTO userDTO){
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

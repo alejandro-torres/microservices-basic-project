@@ -5,8 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
@@ -15,13 +16,14 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.atr.users.security.ApplicationUserRole.*;
-import static org.atr.users.security.ApplicationApiPaths.*;
 import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class ApplicationSecurityConfiguration {
 
 
@@ -34,9 +36,12 @@ public class ApplicationSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(USER_VALIDATE.getPath()).hasAnyRole(ADMIN.name(),USER.name())
-                        .requestMatchers(USER_MANAGER.getPath()).hasRole(ADMIN.name())
+        http.csrf().disable().authorizeHttpRequests((authz) -> authz
+                       /* .requestMatchers(ApiPaths.USER_VALIDATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name(),USER.name())
+                        .requestMatchers(HttpMethod.POST,ApiPaths.USER_MANAGER_CREATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name())
+                        .requestMatchers(HttpMethod.PUT,ApiPaths.USER_MANAGER_UPDATE.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name())
+                        .requestMatchers(HttpMethod.GET,ApiPaths.USER_MANAGER_READ.getPath()).hasAnyRole(ADMIN.name(),ADMINTRAINEE.name())
+                        .requestMatchers(HttpMethod.DELETE,ApiPaths.USER_MANAGER_DELETE.getPath()).hasRole(ADMIN.name())*/
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
@@ -62,7 +67,8 @@ public class ApplicationSecurityConfiguration {
         UserDetails user = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("admin"))
-                .roles(ApplicationUserRole.ADMIN.name())
+                .roles(USER.name())
+                //.authorities(ADMIN.getGrantedAuthorities())
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
         users.createUser(user);
