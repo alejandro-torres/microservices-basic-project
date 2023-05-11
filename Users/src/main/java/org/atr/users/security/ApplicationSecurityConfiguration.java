@@ -20,6 +20,8 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import static org.atr.users.security.ApplicationUserRole.*;
 import javax.sql.DataSource;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
@@ -51,7 +53,8 @@ public class ApplicationSecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE,ApiPaths.USER_MANAGER_DELETE.getPath()).hasRole(ADMIN.name())*/
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults());
+                .httpBasic(withDefaults())
+                .rememberMe().tokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(1));
         return http.build();
     }
 
