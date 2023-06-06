@@ -1,4 +1,4 @@
-# java-microservices-project
+# microservices-basic-project
 Shop Project under construction... 
 
 Shop project | Spring Boot | 3-Tier architecture | REST | CRUD | Rest Template
