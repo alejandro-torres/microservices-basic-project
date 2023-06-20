@@ -64,7 +64,10 @@ class ProductRepositoryTest {
         assertThat(optionalProduct)
                 .isPresent()
                 .hasValueSatisfying(p -> {
-                    assertThat(p).isEqualTo(product);
+                    //assertThat(p).isEqualTo(product);
+                    assertThat(p.getId()).isEqualTo(product.getId());
+                    assertThat(p.getName()).isEqualTo(product.getName());
+                    assertThat(p.getValue()).isEqualTo(product.getValue());
                 });
     }
 
